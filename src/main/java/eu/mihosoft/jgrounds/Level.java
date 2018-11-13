@@ -210,10 +210,10 @@ public final class Level {
 
         return new Level(7, 7,
                 new Scene(tilesMap1, entityMap1,
-                    new Condition.EntityMapCondition(goalState1, "Duke has to reach his goal and can has to collect all gems to open the door.")
+                    new Condition.EntityMapCondition(goalState1, "Duke has to reach his goal and needs to collect all gems to open the door.")
                 ),
                 new Scene(tilesMap2, entityMap2,
-                    new Condition.EntityMapCondition(goalState2, "Duke has to reach his goal and can has to collect all gems to open the door.")
+                    new Condition.EntityMapCondition(goalState2, "Duke has to reach his goal and needs to collect all gems to open the door.")
                 )
         );
     }

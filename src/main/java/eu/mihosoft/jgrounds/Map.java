@@ -74,7 +74,7 @@ public class Map {
                         transition.setOnFinished((ae)-> {
                             if(!isParsing && getCurrentScene().getGoalCondition().check(this)) {
                                 if(sceneIndex+1 >= level.getScenes().size()) {
-                                    e.showDone().setOnFinished((aev)->{
+                                    e.showDone().setOnFinished((aev)-> {
                                         nextScene();
                                     });
                                 } else {
@@ -102,7 +102,6 @@ public class Map {
                         transition.play();
 
                         transition.setOnFinished((ae)-> {
-
                             if(!isParsing && getCurrentScene().getGoalCondition().check(this)) {
                                 if(sceneIndex+1 >= level.getScenes().size()) {
                                     e.showDone().setOnFinished((aev)->{
@@ -113,7 +112,6 @@ public class Map {
                                 }
                             }
                         });
-
 
                     });
                 }

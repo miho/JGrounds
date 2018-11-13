@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="rootPane" prefHeight="516.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.mihosoft.jgrounds.LevelViewController">
+<AnchorPane fx:id="rootPane" prefHeight="516.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.mihosoft.jgrounds.LevelViewController">
    <children>
-      <SplitPane dividerPositions="0.5" layoutX="200.0" layoutY="109.0" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.75" layoutX="200.0" layoutY="109.0" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -16,19 +16,19 @@
                   <HBox fx:id="runtimeControlPane" alignment="CENTER" layoutX="83.0" layoutY="414.0" prefHeight="50.0" prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStopAction" prefWidth="80.0" text="STOP" textAlignment="CENTER" />
-                        <Button mnemonicParsing="false" onAction="#onCompileAction" prefWidth="80.0" text="RUN" textAlignment="CENTER" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#onCompileAction" prefWidth="80.0" text="RUN" textAlignment="CENTER" />
                      </children>
                   </HBox>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
                <children>
-                  <SplitPane dividerPositions="0.5" layoutX="102.0" layoutY="157.0" orientation="VERTICAL" prefHeight="514.0" prefWidth="364.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="1.0" layoutX="102.0" layoutY="157.0" orientation="VERTICAL" prefHeight="514.0" prefWidth="364.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane fx:id="codeViewPane" minHeight="50.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
                            <children>
-                              <VBox fx:id="commandViewPane" alignment="CENTER" layoutX="131.0" layoutY="26.0" prefHeight="252.0" prefWidth="362.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <VBox fx:id="commandViewPane" alignment="CENTER" layoutX="131.0" layoutY="26.0" maxHeight="1.7976931348623157E308" prefHeight="252.0" prefWidth="362.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                     </items>

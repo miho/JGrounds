@@ -8,9 +8,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.LineNumberFactory;
+// import org.fxmisc.flowless.VirtualizedScrollPane;
+// import org.fxmisc.richtext.CodeArea;
+// import org.fxmisc.richtext.LineNumberFactory;
 
 
 import java.net.URL;
@@ -23,11 +23,14 @@ public class LevelViewController implements Initializable{
     // private CodeArea codeArea;
     private Map map;
 
+    private Thread thread;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         shell = new GroovyShell();
 
         codeArea = /*new CodeArea();//*/ new TextArea();
+        codeArea.setText("duke.move()");
         // codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         // VirtualizedScrollPane<CodeArea> vsPane = new VirtualizedScrollPane<>(codeArea);
 
@@ -71,7 +74,6 @@ public class LevelViewController implements Initializable{
 
         map.getView().setStyle("-fx-background-color: linear-gradient(#434b5e 0%, #110922 50%, #434b5e 100%)");
 
-
         worldViewPane.layout();
     }
 
@@ -81,7 +83,9 @@ public class LevelViewController implements Initializable{
 
     @FXML private void onCompileAction(ActionEvent ae) {
 
-        Thread thread = new Thread(()->{
+        onStopAction(ae);
+
+        thread = new Thread(() -> {
 
             shell.evaluate(codeArea.getText());
 
@@ -91,8 +95,18 @@ public class LevelViewController implements Initializable{
     }
 
     @FXML private void onStopAction(ActionEvent ae) {
+
+        if(thread!=null) {
+            // TODO 13.11.2018 how to properly stop groovy script evaluation?
+            thread.stop();
+        }
+
         if(map!=null) {
-            setMap(new Map(map.getLevel()));
+            Map newMap = new Map(map.getLevel());
+            if(newMap.getDuke().getX()!=map.getDuke().getX()
+                    ||newMap.getDuke().getY()!=map.getDuke().getY()) {
+                setMap(newMap);
+            }
         }
     }
 

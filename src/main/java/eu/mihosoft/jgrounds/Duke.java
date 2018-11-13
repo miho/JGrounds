@@ -19,6 +19,8 @@ public class Duke {
 
     private final List<Entity> collectedGems = new ArrayList<>();
 
+    private static long delay = 500;
+
     public Duke(Map map) {
         this.map = map;
         this.dukeEntity = map.getDuke();
@@ -142,9 +144,13 @@ public class Duke {
         });
 
         try {
-            Thread.sleep(500);
+            Thread.sleep(Duke.delay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setDelay(long delay) {
+        Duke.delay = delay;
     }
 }
