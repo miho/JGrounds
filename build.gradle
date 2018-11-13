@@ -1,33 +1,37 @@
 apply plugin: 'java'
+apply plugin: 'application'
 
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.5.1'
+wrapper {
+    gradleVersion = '4.10.2'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
-/**
- ******************  Script Configuration ******************
- */
-buildscript {
-  repositories {
-    mavenLocal()
-    maven {
-      url "http://sandec.bintray.com/repo"
-    }
-    jcenter()
-  }
+// /**
+//  ******************  Script Configuration ******************
+//  */
+// buildscript {
+//   repositories {
+//     mavenLocal()
+//     maven {
+//       url "http://sandec.bintray.com/repo"
+//     }
+//     jcenter()
+//   }
 
-  dependencies {
-    classpath 'com.jprotechnologies.jpro:jpro-plugin-gradle:2017.1.0-SNAPSHOT'
-  }
-}
+//   dependencies {
+//     classpath 'com.jprotechnologies.jpro:jpro-plugin-gradle:2017.1.0-SNAPSHOT'
+//   }
+// }
 
+def osName = System.getProperty("os.name").toLowerCase()
+ext.platform = osName.contains("mac") ? 'mac' : osName.contains("windows") ? 'win' : osName;
 
 if (!hasProperty('mainClass')) {
     ext.mainClass = 'eu.mihosoft.jgrounds.JGrounds'
+    mainClassName = ext.mainClass
 }
 
 repositories {
@@ -40,12 +44,41 @@ dependencies {
     
     compile 'eu.mihosoft.jfx.scaledfx:scaledfx:0.4'
 
-    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.12'
-    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.12', classifier: 'javadoc'
-    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.12', classifier: 'sources'
+    compile group: 'org.codehaus.groovy', name: 'groovy', version: '2.5.4'
+    // compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4'
+    // compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4', classifier: 'javadoc'
+    // compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4', classifier: 'sources'
 
-    compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.8.2'
-    compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.8.2', classifier: 'javadoc'
+    // compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.9.1'
+    // compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.9.1', classifier: 'javadoc'
+
+    compile "org.openjfx:javafx-base:11:$platform"
+    compile "org.openjfx:javafx-graphics:11:$platform"
+    compile "org.openjfx:javafx-controls:11:$platform"
+    compile "org.openjfx:javafx-fxml:11:$platform"
+}
+
+compileJava {
+    doFirst {
+        options.compilerArgs = [
+                '--module-path', classpath.asPath,
+                '--add-modules', 'javafx.controls'
+        ]
+    }
+}
+
+run {
+    doFirst {
+        jvmArgs = [
+                '--module-path', classpath.asPath,
+                '--add-modules', 'javafx.controls',
+                '--add-exports', 'javafx.graphics/com.sun.javafx.util=ALL-UNNAMED',
+                '--add-exports', 'javafx.base/com.sun.javafx.reflect=ALL-UNNAMED',
+                '--add-exports', 'javafx.base/com.sun.javafx.beans=ALL-UNNAMED',
+                '--add-exports', 'javafx.graphics/com.sun.glass.utils=ALL-UNNAMED',
+                '--add-exports', 'javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED'
+        ]
+    }
 }
 
 /*
@@ -60,27 +93,27 @@ task run(type: JavaExec) {
 /**
  ******************  jpro Configuration ******************
  */
-apply plugin: 'com.jprotechnologies.jpro'
-
-jproStartCommand {
-  //jvmArgs '-agentlib:jdwp=transport=dt_socket,server=y,address=5006,suspend=y'
-}
+// apply plugin: 'com.jprotechnologies.jpro'
+// 
+// jproStartCommand {
+  // jvmArgs '-agentlib:jdwp=transport=dt_socket,server=y,address=5006,suspend=y'
+// }
 
 /**
  * App Main Class
  */
-mainClassName = mainClass
+// mainClassName = mainClass
 
-jpro {
-  //jpro server port
-  useGradleLogging = true
-  port = 8080
+// jpro {
+//   //jpro server port
+//   useGradleLogging = true
+//   port = 8080
 
-  //wenn mehrere Stags über eine main() gestartet werden
-  //useMainMethod=true
+//   //wenn mehrere Stages über eine main() gestartet werden
+//   //useMainMethod=true
 
-  //jpro version
-  jproVersion = "2017.1.0-SNAPSHOT"
+//   //jpro version
+//   jproVersion = "2017.1.0-SNAPSHOT"
 
-  openingPath = "/test/fullscreen/default"
-}
+//   openingPath = "/test/fullscreen/default"
+// }

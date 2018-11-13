@@ -19,22 +19,21 @@ import java.util.ResourceBundle;
 public class LevelViewController implements Initializable{
 
     private GroovyShell shell;
-    private CodeArea codeArea;
+    private TextArea codeArea;
+    // private CodeArea codeArea;
     private Map map;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         shell = new GroovyShell();
 
-        codeArea = new CodeArea();// new TextArea();
-        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+        codeArea = /*new CodeArea();//*/ new TextArea();
+        // codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+        // VirtualizedScrollPane<CodeArea> vsPane = new VirtualizedScrollPane<>(codeArea);
 
-        VirtualizedScrollPane<CodeArea> vsPane = new VirtualizedScrollPane<>(codeArea);
-
-        //javafx.scene.control.ScrollPane vsPane = new javafx.scene.control.ScrollPane(codeArea);
-
-        //vsPane.setFitToWidth(true);
-        //vsPane.setFitToHeight(true);
+        javafx.scene.control.ScrollPane vsPane = new javafx.scene.control.ScrollPane(codeArea);
+        vsPane.setFitToWidth(true);
+        vsPane.setFitToHeight(true);
 
         codeViewPane.getChildren().add(vsPane);
         AnchorPane.setLeftAnchor(vsPane,0.0);
