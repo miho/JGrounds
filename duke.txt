@@ -1,0 +1,114 @@
+// 1
+duke.move()
+duke.move()
+
+duke.turnRight()
+duke.move()
+duke.move()
+duke.move()
+
+
+
+// 2
+duke.turnRight()
+duke.move()
+duke.move()
+duke.turnLeft()
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.turnRight()
+duke.move()
+duke.move()
+
+duke.turnRight()
+duke.move()
+duke.move()
+duke.turnLeft()
+while(!duke.isBlocked()) {
+  duke.move()
+}
+duke.turnRight()
+while(!duke.isBlocked()) {
+  duke.move()
+}
+
+
+// 3
+duke.turnLeft()
+duke.move()
+duke.move()
+duke.collect()
+duke.turnRight()
+duke.move()
+duke.move()
+duke.turnRight()
+duke.move()
+duke.move()
+duke.move()
+duke.collect()
+duke.turnLeft()
+duke.move()
+duke.turnLeft()
+duke.move()
+duke.move()
+duke.collect()
+duke.move()
+duke.turnRight()
+duke.move()
+
+// 4
+duke.turnRight()
+duke.turnRight()
+duke.move()
+duke.move()
+duke.collect()
+duke.turnLeft()
+duke.move()
+duke.turnLeft()
+duke.move()
+duke.turnRight()
+duke.move()
+duke.collect()
+duke.move()
+duke.turnLeft()
+duke.move()
+duke.turnRight()
+duke.move()
+duke.collect()
+duke.turnRight()
+duke.move()
+duke.move()
+duke.turnRight()
+duke.move()
+duke.move()
+duke.turnLeft()
+duke.move()
+duke.move()
+
+// 5
+while(!duke.isBlocked()) {
+  duke.move()
+}
+duke.turnRight()
+duke.move()
+
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.move()
+duke.turnRight()
+duke.move()
+
+

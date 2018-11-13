@@ -1,0 +1,86 @@
+apply plugin: 'java'
+
+sourceCompatibility = '1.8'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.5.1'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+/**
+ ******************  Script Configuration ******************
+ */
+buildscript {
+  repositories {
+    mavenLocal()
+    maven {
+      url "http://sandec.bintray.com/repo"
+    }
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.jprotechnologies.jpro:jpro-plugin-gradle:2017.1.0-SNAPSHOT'
+  }
+}
+
+
+if (!hasProperty('mainClass')) {
+    ext.mainClass = 'eu.mihosoft.jgrounds.JGrounds'
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.10'
+    
+    compile 'eu.mihosoft.jfx.scaledfx:scaledfx:0.4'
+
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.12'
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.12', classifier: 'javadoc'
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.12', classifier: 'sources'
+
+    compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.8.2'
+    compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.8.2', classifier: 'javadoc'
+}
+
+/*
+task run(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = mainClass
+//    jvmArgs = ['-Dprism.forceGPU=true', '-Dprism.verbose=true', '-Dprism.order=es2,d3d,sw']
+//    jvmArgs = ['-Dprism.forceGPU=true']
+}
+*/
+
+/**
+ ******************  jpro Configuration ******************
+ */
+apply plugin: 'com.jprotechnologies.jpro'
+
+jproStartCommand {
+  //jvmArgs '-agentlib:jdwp=transport=dt_socket,server=y,address=5006,suspend=y'
+}
+
+/**
+ * App Main Class
+ */
+mainClassName = mainClass
+
+jpro {
+  //jpro server port
+  useGradleLogging = true
+  port = 8080
+
+  //wenn mehrere Stags über eine main() gestartet werden
+  //useMainMethod=true
+
+  //jpro version
+  jproVersion = "2017.1.0-SNAPSHOT"
+
+  openingPath = "/test/fullscreen/default"
+}

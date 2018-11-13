@@ -1,0 +1,10 @@
+/.gradle/
+/.idea/
+/.nb-gradle/
+/out/
+/bin/
+/build/
+/logs/
+/.vscode/
+/.settings
+/.classpath
