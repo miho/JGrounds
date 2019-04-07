@@ -93,6 +93,7 @@ while(!duke.isBlocked()) {
 }
 duke.turnRight()
 duke.move()
+duke.move()
 
 duke.move()
 duke.move()

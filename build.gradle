@@ -5,7 +5,7 @@ sourceCompatibility = '11'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 wrapper {
-    gradleVersion = '4.10.2'
+    gradleVersion = '5.3'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
@@ -42,7 +42,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
     
-    compile 'eu.mihosoft.jfx.scaledfx:scaledfx:0.4'
+    compile 'eu.mihosoft.jfx.scaledfx:scaledfx:0.6'
 
     compile group: 'org.codehaus.groovy', name: 'groovy', version: '2.5.4'
     // compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4'

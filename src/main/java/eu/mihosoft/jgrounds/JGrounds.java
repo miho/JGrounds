@@ -25,10 +25,22 @@ public class JGrounds extends Application {
         double h = scene==null?600:scene.getHeight();
 
         this.scene = new Scene(levelView, w, h);
-
         primaryStage.setScene(scene);
 
         levelView.initLevel();
+    }
+
+    public void setLevels(Level... levels) {
+        Level prevLevel = null;
+        for(Level l : levels) {
+            if(prevLevel != null) {
+                prevLevel.setLevelTransition(()->setLevel(l));
+            } else {
+                setLevel(l);
+            }
+
+            prevLevel = l;
+        }
     }
 
     @Override
@@ -36,16 +48,18 @@ public class JGrounds extends Application {
         try {
             this.primaryStage = primaryStage;
 
-            primaryStage.setTitle("JGrounds App running on " + System.getProperty("java.version"));
+            primaryStage.setTitle("JGrounds App running on JDK " + System.getProperty("java.version"));
             primaryStage.show();
 
-            setLevel(
-                    Level.newDefaultLevel().
-                            setLevelTransition(()->setLevel(Level.levelTwo().
-                                    setLevelTransition(()->setLevel(Level.levelThree().
-                                            setLevelTransition(()->setLevel(Level.levelFour().
-                                                    setLevelTransition(()->setLevel(Level.levelFive()))))))))
-            );
+            Level[] levels = {
+                Level.newDefaultLevel(),
+                Level.levelTwo(),
+                Level.levelThree(),
+                Level.levelFour(),
+                Level.levelFive()
+            };
+
+            setLevels(levels);
 
         } catch (Throwable ex) {
             ex.printStackTrace(System.err);

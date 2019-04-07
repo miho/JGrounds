@@ -224,57 +224,40 @@ public final class Level {
 
     public static Level levelFive() {
         String floorMap =
-                "000000000000000" +
-                "              G" +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               ";
+                "+V-V-V-V-V-V-V-V+" +
+                "v000000000000000v" +
+                "+V-V-V-V-V-V-V+0|" +
+                "|0000000000000vGv" +
+                "v0000000000000+V+" +
+                "|000000000000000v" +
+                "v000000000000000+" +
+                "|000000000000000v" +
+                "+V-V-V-V-V-V-V-V+";
+
 
         String entityMap =
-                "D00000000000000" +
-                "              0" +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               ";
+                "                 " +
+                "0D00000000000000 " +
+                "               0 " +
+                "               0 " +
+                "                 " +
+                "                 " +
+                "                 " +
+                "                 " +
+                "                 ";
 
         String goalState =
-                "000000000000000" +
-                "              D" +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               " +
-                "               ";
+                "                 " +
+                "0000000000000000 " +
+                "               0 " +
+                "               D " +
+                "                 " +
+                "                 " +
+                "                 " +
+                "                 " +
+                "                 ";
 
-        return new Level(15, 15, new Scene(floorMap, entityMap,
+        return new Level(17, 9, new Scene(floorMap, entityMap,
                 new Condition.EntityMapCondition(goalState, "Duke has to reach his goal.")));
     }
 }
