@@ -113,3 +113,34 @@ duke.turnRight()
 duke.move()
 
 
+
+
+// DEBUG Z-ORDER
+duke.move()
+duke.turnRight()
+duke.move()
+duke.turnRight()
+duke.turnRight()
+duke.move()
+duke.turnLeft()
+duke.move()
+duke.turnRight()
+duke.turnRight()
+
+duke.turnLeft()
+duke.turnLeft()
+duke.move()
+duke.turnLeft()
+duke.turnLeft()
+duke.move()
+
+duke.move()
+duke.turnRight()
+duke.move()
+duke.turnRight()
+duke.move()
+duke.turnRight()
+duke.move()
+
+
+

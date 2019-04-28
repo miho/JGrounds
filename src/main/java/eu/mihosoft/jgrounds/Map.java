@@ -7,9 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Map {
 
@@ -23,7 +21,7 @@ public class Map {
 
     private final ObservableList<Entity> entities
             = FXCollections.observableArrayList();
-    private final ObservableList<Node> tiles
+    private final ObservableList<Entity> tiles
             = FXCollections.observableArrayList();
 
     private final ObservableList<Entity> gems
@@ -71,7 +69,19 @@ public class Map {
                         transition.setToY(y);
                         transition.play();
 
+                        boolean xBigger =   x > e.getView().getTranslateX();
+                        boolean xSmaller =   x < e.getView().getTranslateX();
+
+                        if(xBigger) {
+                            updateZOrder(e);
+                        }
+
                         transition.setOnFinished((ae)-> {
+
+                            if(xSmaller) {
+                                updateZOrder(e);
+                            }
+
                             if(!isParsing && getCurrentScene().getGoalCondition().check(this)) {
                                 if(sceneIndex+1 >= level.getScenes().size()) {
                                     e.showDone().setOnFinished((aev)-> {
@@ -95,13 +105,26 @@ public class Map {
                         y += (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
 
                         TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
+
                         transition.setFromX(e.getView().getTranslateX());
                         transition.setFromY(e.getView().getTranslateY());
                         transition.setToX(x);
                         transition.setToY(y);
                         transition.play();
 
+                        boolean yBigger =   y > e.getView().getTranslateY();
+                        boolean ySmaller =   y < e.getView().getTranslateY();
+
+                        if(yBigger) {
+                            updateZOrder(e);
+                        }
+
                         transition.setOnFinished((ae)-> {
+
+                            if(ySmaller) {
+                                updateZOrder(e);
+                            }
+
                             if(!isParsing && getCurrentScene().getGoalCondition().check(this)) {
                                 if(sceneIndex+1 >= level.getScenes().size()) {
                                     e.showDone().setOnFinished((aev)->{
@@ -123,6 +146,35 @@ public class Map {
         });
 
         parseMaps();
+
+    }
+
+    private void updateZOrder(Entity entity) {
+
+        Comparator<Entity> comparator = (o1, o2) -> {
+
+            if(o2.getZ() != o1.getZ()) {
+                return Double.compare(o2.getZ(), o1.getZ());
+            }
+
+            int tileIndex1 = coordsToTileIndex(o1.getX(), o1.getY());
+            int tileIndex2 = coordsToTileIndex(o2.getX(), o2.getY());
+
+            return Double.compare(tileIndex2, tileIndex1);
+        };
+
+        List<Entity> zOrder = new ArrayList<>();
+        zOrder.addAll(tiles);
+        zOrder.addAll(entities);
+        zOrder.addAll(gems);
+
+        Collections.sort(zOrder, comparator);
+
+        for(int idx = 0; idx < zOrder.size(); idx++) {
+            Entity e = zOrder.get(idx);
+            e.getView().setViewOrder(idx);
+        }
+
     }
 
     public void nextScene() {
@@ -135,9 +187,11 @@ public class Map {
 
         parseMaps();
 
-        List<Entity> revertedEntities = new ArrayList<>(entities);
-        Collections.reverse(revertedEntities);
-        revertedEntities.forEach(entity -> entity.getView().toFront());
+//        List<Entity> revertedEntities = new ArrayList<>(entities);
+//        Collections.reverse(revertedEntities);
+//        revertedEntities.forEach(entity -> entity.getView().toFront());
+
+
     }
 
     public Scene getCurrentScene() {
@@ -170,6 +224,10 @@ public class Map {
         return floorMap.charAt(tileIndex);
     }
 
+    private int coordsToTileIndex(int x, int y) {
+        return x + (height - 1 - y) * width;
+    }
+
     private void parseMaps() {
 
         isParsing = true;
@@ -187,7 +245,7 @@ public class Map {
 
                 TileView tileView;
 
-                int tileIndex = i + (height - 1 - j) * width;
+                int tileIndex = coordsToTileIndex(i,j);
 
                 char tileType = floorMap.charAt(tileIndex);
 
@@ -204,7 +262,12 @@ public class Map {
                             tileView = null;
                             break;
                         default:
-                            tileView = new TileView("" + tileType);
+//                            tileView =  new TileView("" + tileType);
+                            Entity tile = Entity.newTile("" + tileType);
+                            tileView = tile.getView();
+                            tile.setMap(this);
+                            tiles.add(tile);
+                            tile.setLocation(i, j);
                             break;
                     }
 
@@ -235,6 +298,8 @@ public class Map {
         } // end for i
 
         isParsing = false;
+
+        updateZOrder(null);
     }
 
     /**

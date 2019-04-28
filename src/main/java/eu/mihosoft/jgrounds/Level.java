@@ -260,4 +260,56 @@ public final class Level {
         return new Level(17, 9, new Scene(floorMap, entityMap,
                 new Condition.EntityMapCondition(goalState, "Duke has to reach his goal.")));
     }
+
+    public static Level frontVSBackDebugLevel() {
+        String floorMap1 =
+                "+V-V+" +
+                "v000v" +
+                "|0f0|" +
+                "v00Gv" +
+                "+V-V+";
+
+        String entityMap1 =
+                "00000" +
+                "00D00" +
+                "00000" +
+                "00000" +
+                "00000";
+
+        String goalState1 =
+                "00000" +
+                "00000" +
+                "000D0" +
+                "00000" +
+                "00000";
+
+        String floorMap2 =
+                "+V-V+" +
+                "v000v" +
+                "|0t0|" +
+                "v00Gv" +
+                "+V-V+";
+
+        String entityMap2 =
+                "00000" +
+                "00000" +
+                "00000" +
+                "00000" +
+                "00000";
+
+        String goalState2 =
+                "00000" +
+                "00000" +
+                "00000" +
+                "000D0" +
+                "00000";
+               
+
+        return new Level(5,5,
+                new Scene(floorMap1, entityMap1,
+                new Condition.EntityMapCondition(goalState1, "Duke has to reach his goal.")),
+                new Scene(floorMap2, entityMap2,
+                new Condition.EntityMapCondition(goalState2, "Duke has to reach his goal."))
+        );
+    }
 }

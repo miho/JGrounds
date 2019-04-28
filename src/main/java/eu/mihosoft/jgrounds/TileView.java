@@ -102,6 +102,7 @@ public class TileView extends Region {
 
         // hover effect for gems
         if(entity && "G".equals(type)) {
+            view.setManaged(false);
             TranslateTransition translateTransition =
                     new TranslateTransition(Duration.millis(2000), view);
             translateTransition.setFromY(view.getTranslateY()-1.5);

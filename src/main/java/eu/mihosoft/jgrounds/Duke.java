@@ -90,7 +90,8 @@ public class Duke {
         }
 
         Platform.runLater(()-> {
-            dukeEntity.getView().toFront();
+            // TODO fix that
+            // dukeEntity.getView().toFront();
 
             dukeEntity.setLocation(dukeEntity.getX()+directionX, dukeEntity.getY()+directionY);
         });
@@ -115,8 +116,6 @@ public class Duke {
                 collectedGems.add(entity);
                 collectedEntities.add(entity);
             });
-
-
 
             collectedEntities.stream().forEach(entity -> {
 

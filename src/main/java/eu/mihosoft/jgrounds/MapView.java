@@ -4,9 +4,11 @@ import eu.mihosoft.scaledfx.ScalableContentPane;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 
 public class MapView extends ScalableContentPane {
 
