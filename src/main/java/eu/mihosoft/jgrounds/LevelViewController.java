@@ -4,6 +4,7 @@ import groovy.lang.GroovyShell;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -34,7 +35,7 @@ public class LevelViewController implements Initializable{
         // codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         // VirtualizedScrollPane<CodeArea> vsPane = new VirtualizedScrollPane<>(codeArea);
 
-        javafx.scene.control.ScrollPane vsPane = new javafx.scene.control.ScrollPane(codeArea);
+        ScrollPane vsPane = new ScrollPane(codeArea);
         vsPane.setFitToWidth(true);
         vsPane.setFitToHeight(true);
 

@@ -25,7 +25,13 @@ public class MapView extends ScalableContentPane {
         this.map = map;
         mapPane = new Pane();
 
-        StackPane container = new StackPane(new Group(mapPane));
+        Group mapGroup = new Group(mapPane);
+        Rectangle boundsRect = new Rectangle();
+        boundsRect.widthProperty().bind(mapPane.widthProperty());
+        boundsRect.heightProperty().bind(mapPane.heightProperty());
+        mapPane.setClip(boundsRect);
+
+        StackPane container = new StackPane(mapGroup);
         StackPane.setAlignment(mapPane,Pos.CENTER);
 
         setContent(container);
