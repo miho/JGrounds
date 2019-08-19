@@ -52,9 +52,9 @@ public class JGrounds extends Application {
             primaryStage.show();
 
             Level[] levels = {
-                Level.frontVSBackDebugLevel(),
-                Level.newDefaultLevel(),
-                Level.levelTwo(),
+                //Level.frontVSBackDebugLevel(),
+//                Level.newDefaultLevel(),
+//                Level.levelTwo(),
                 Level.levelThree(),
                 Level.levelFour(),
                 Level.levelFive()

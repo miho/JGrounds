@@ -14,8 +14,6 @@ public class LevelView extends AnchorPane {
     public LevelView(Level l) {
         Map map = new Map(l);
 
-        // map.getView().setStyle("-fx-background-color: linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%)");
-
         loadFXML();
 
         controller.setMap(map);
