@@ -1,5 +1,6 @@
 package eu.mihosoft.jgrounds;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -53,11 +54,10 @@ public class Map {
 
                     e.getView().toFront();
                     
-                    updateXLocation(e);
-                    updateYLocation(e);
+                    updateLocation(e);
 
-                    e.xProperty().addListener(l->updateXLocation(e));
-                    e.yProperty().addListener(l->updateYLocation(e));
+                    e.xProperty().addListener(l->updateLocation(e));
+                    e.yProperty().addListener(l->updateLocation(e));
 
                 } // end for
 
@@ -72,60 +72,89 @@ public class Map {
 
     }
 
-    private void updateYLocation(Entity e) {
+    // private void updateYLocation(Entity e) {
+    //     double x = (e.getY() * view.getTileWidth() / 2) + (e.getX() * view.getTileWidth() / 2);
+    //     double y = (e.getX() * view.getTileHeight() / 2) - (e.getY() * view.getTileHeight() / 2);
+
+    //     // center y
+    //     y += (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
+
+    //     TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
+
+    //     transition.setFromX(e.getView().getTranslateX());
+    //     transition.setFromY(e.getView().getTranslateY());
+    //     transition.setToX(x);
+    //     transition.setToY(y);
+        
+    //     if(Double.compare(y, 0) == 0 || Double.compare(e.getView().getTranslateY(), 0) == 0 ) {
+    //         e.getView().setTranslateX(x);
+    //         e.getView().setTranslateY(y);
+
+    //         FadeTransition transition2 = new FadeTransition(Duration.millis(800), e.getView());
+    //         transition2.setFromValue(0.0);
+    //         transition2.setToValue(1.0);
+    //         //transition2.setCycleCount(3);
+    //         //transition2.setAutoReverse(true);
+    //         transition2.play();
+
+    //     } else {
+    //         transition.play();
+    //     }
+
+    //     boolean yBigger = y > e.getView().getTranslateY();
+    //     boolean ySmaller = y < e.getView().getTranslateY();
+
+    //     if (yBigger) {
+    //         updateZOrder(e);
+    //     }
+
+    //     transition.setOnFinished((ae) -> {
+
+    //         if (ySmaller) {
+    //             updateZOrder(e);
+    //         }
+
+    //         if (!isParsing && getCurrentScene().getGoalCondition().check(this)) {
+    //             if (sceneIndex + 1 >= level.getScenes().size()) {
+    //                 e.showDone().setOnFinished((aev) -> {
+    //                     nextScene();
+    //                 });
+    //             } else {
+    //                 nextScene();
+    //             }
+    //         }
+    //     });
+
+    // }
+
+    private void updateLocation(Entity e) {
+        
         double x = (e.getY() * view.getTileWidth() / 2) + (e.getX() * view.getTileWidth() / 2);
         double y = (e.getX() * view.getTileHeight() / 2) - (e.getY() * view.getTileHeight() / 2);
 
         // center y
         y += (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
 
-        TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
 
+
+        TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
         transition.setFromX(e.getView().getTranslateX());
         transition.setFromY(e.getView().getTranslateY());
         transition.setToX(x);
         transition.setToY(y);
-        transition.play();
 
-        boolean yBigger = y > e.getView().getTranslateY();
-        boolean ySmaller = y < e.getView().getTranslateY();
+        if(Double.compare(x, 0) == 0 || Double.compare(e.getView().getTranslateX(), 0) == 0 ) {
+            e.getView().setTranslateX(x);
+            e.getView().setTranslateY(y);
 
-        if (yBigger) {
-            updateZOrder(e);
+            FadeTransition transition2 = new FadeTransition(Duration.millis(1500), e.getView());
+            transition2.setFromValue(0.0);
+            transition2.setToValue(1.0);
+            transition2.play();
+
+        } else {
+            transition.play();
         }
-
-        transition.setOnFinished((ae) -> {
-
-            if (ySmaller) {
-                updateZOrder(e);
-            }
-
-            if (!isParsing && getCurrentScene().getGoalCondition().check(this)) {
-                if (sceneIndex + 1 >= level.getScenes().size()) {
-                    e.showDone().setOnFinished((aev) -> {
-                        nextScene();
-                    });
-                } else {
-                    nextScene();
-                }
-            }
-        });
-
-    }
-
-    private void updateXLocation(Entity e) {
-        double x = (e.getY() * view.getTileWidth() / 2) + (e.getX() * view.getTileWidth() / 2);
-        double y = (e.getX() * view.getTileHeight() / 2) - (e.getY() * view.getTileHeight() / 2);
-
-        // center y
-        y += (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
-
-        TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
-        transition.setFromX(e.getView().getTranslateX());
-        transition.setFromY(e.getView().getTranslateY());
-        transition.setToX(x);
-        transition.setToY(y);
-        transition.play();
 
         boolean xBigger = x > e.getView().getTranslateX();
         boolean xSmaller = x < e.getView().getTranslateX();

@@ -38,6 +38,12 @@ public class TileView extends Region {
         String imgName;
 
         switch (type) {
+            case "p":
+                imgName = "P-off";
+                break;
+            case "P":
+                imgName = "P-on";
+                break;
             case "F":
                 imgName = "T-off";
                 break;
