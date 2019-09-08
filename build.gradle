@@ -49,8 +49,8 @@ dependencies {
     // compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4', classifier: 'javadoc'
     // compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4', classifier: 'sources'
 
-    // compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.9.1'
-    // compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.9.1', classifier: 'javadoc'
+    compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.10.2'
+    compile group: 'org.fxmisc.richtext', name: 'richtextfx', version: '0.10.2', classifier: 'javadoc'
 
     compile "org.openjfx:javafx-base:11:$platform"
     compile "org.openjfx:javafx-graphics:11:$platform"

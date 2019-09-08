@@ -13,16 +13,21 @@ import javafx.scene.layout.VBox;
 // import org.fxmisc.flowless.VirtualizedScrollPane;
 // import org.fxmisc.richtext.CodeArea;
 // import org.fxmisc.richtext.LineNumberFactory;
-
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
+
 public class LevelViewController implements Initializable{
 
     private GroovyShell shell;
-    private TextArea codeArea;
-    // private CodeArea codeArea;
+    // private TextArea codeArea;
+    private CodeArea codeArea;
     private Map map;
 
     private Thread thread;
@@ -31,14 +36,17 @@ public class LevelViewController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         shell = new GroovyShell();
 
-        codeArea = /*new CodeArea();//*/ new TextArea();
-        codeArea.setText("duke.move()");
-        // codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
-        // VirtualizedScrollPane<CodeArea> vsPane = new VirtualizedScrollPane<>(codeArea);
+        codeArea = new CodeArea();// /*new CodeArea();//*/ new TextArea();
+        codeArea.setStyle("-fx-font-family: courier-new; -fx-font-size: 16pt;");
+        // codeArea.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
+        // codeArea.setText("duke.move()");
+        codeArea.replaceText(0,0, "duke.move()");
+        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+        VirtualizedScrollPane<CodeArea> vsPane = new VirtualizedScrollPane<>(codeArea);
 
-        ScrollPane vsPane = new ScrollPane(codeArea);
-        vsPane.setFitToWidth(true);
-        vsPane.setFitToHeight(true);
+        //ScrollPane vsPane = new ScrollPane(codeArea);
+        //vsPane.setFitToWidth(true);
+        //vsPane.setFitToHeight(true);
 
         codeViewPane.getChildren().add(vsPane);
         AnchorPane.setLeftAnchor(vsPane,0.0);
@@ -54,7 +62,7 @@ public class LevelViewController implements Initializable{
     @FXML private AnchorPane codeViewPane;
 
     @FXML private VBox commandViewPane;
-    
+
     @FXML private Pane dukeControl;
 
     @FXML private AnchorPane rootPane;
@@ -79,6 +87,8 @@ public class LevelViewController implements Initializable{
         map.getView().setStyle("-fx-background-color: linear-gradient(#434b5e 0%, #110922 50%, #434b5e 100%)");
 
         worldViewPane.layout();
+
+
     }
 
     public AnchorPane getRootPane() {
