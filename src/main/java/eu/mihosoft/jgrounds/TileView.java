@@ -17,6 +17,7 @@ public class TileView extends Region {
     private int height = 32;
 
     private ImageView view;
+    private ImageView shadowView;
     private ImageView errorView;
     private ImageView levelDoneView;
 
@@ -72,6 +73,22 @@ public class TileView extends Region {
         this.getChildren().add(view);
         view.setTranslateY(-view.getLayoutBounds().getHeight());
 
+        // ---
+
+        if(!isEntity()) {
+            shadowView = new ImageView(
+                new Image("/eu/mihosoft/jgrounds/" + (entity?"entities/":"tiles/")/*+imgName*/ + "0-shadow.png")
+            );
+
+            shadowView.setPreserveRatio(true);
+            shadowView.setFitWidth(width);
+
+            shadowView.setVisible(false);
+
+            this.getChildren().add(shadowView);
+            shadowView.setTranslateY(-shadowView.getLayoutBounds().getHeight());
+        }
+
         if(entity && "D".equals(type)) {
             errorView = new ImageView(
                     new Image("/eu/mihosoft/jgrounds/" + (entity ? "entities/" : "tiles/") + imgName + "-ERROR.png")
@@ -102,14 +119,20 @@ public class TileView extends Region {
 
         // hover effect for gems
         if(entity && "G".equals(type)) {
-            //view.setManaged(false);
             TranslateTransition translateTransition =
                     new TranslateTransition(Duration.millis(2000), view);
-            translateTransition.setFromY(view.getTranslateY()-1.5);
-            translateTransition.setToY(view.getTranslateY()+1.5);
+            translateTransition.setFromY(view.getTranslateY()-3);
+            translateTransition.setToY(view.getTranslateY()-0.5);
+            translateTransition.setInterpolator(Interpolator.EASE_BOTH);
             translateTransition.setCycleCount(Transition.INDEFINITE);
             translateTransition.setAutoReverse(true);
             translateTransition.play();
+        }
+    }
+
+    public void showShadow(boolean shadow) {
+        if(!isEntity()) {
+            shadowView.setVisible(shadow);
         }
     }
 

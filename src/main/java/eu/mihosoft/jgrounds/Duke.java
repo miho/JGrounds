@@ -119,6 +119,8 @@ public class Duke {
 
             collectedEntities.stream().forEach(entity -> {
 
+                entity.setShadow(false);
+
                 TranslateTransition translateTransition =
                         new TranslateTransition(Duration.millis(500), entity.getView());
                 translateTransition.setFromY(entity.getView().getTranslateY());

@@ -52,94 +52,17 @@ public class Map {
                     view.getMapPane().getChildren().add(e.getView());
 
                     e.getView().toFront();
+                    
+                    updateXLocation(e);
+                    updateYLocation(e);
 
-                    e.xProperty().addListener(l -> {
-                        double x = (e.getY() * view.getTileWidth() / 2)
-                                + (e.getX() * view.getTileWidth() / 2);
-                        double y = (e.getX() * view.getTileHeight() / 2)
-                                - (e.getY() * view.getTileHeight() / 2);
+                    e.xProperty().addListener(l->updateXLocation(e));
+                    e.yProperty().addListener(l->updateYLocation(e));
 
-                        // center y
-                        y += (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
-
-                        TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
-                        transition.setFromX(e.getView().getTranslateX());
-                        transition.setFromY(e.getView().getTranslateY());
-                        transition.setToX(x);
-                        transition.setToY(y);
-                        transition.play();
-
-                        boolean xBigger =   x > e.getView().getTranslateX();
-                        boolean xSmaller =   x < e.getView().getTranslateX();
-
-                        if(xBigger) {
-                            updateZOrder(e);
-                        }
-
-                        transition.setOnFinished((ae)-> {
-
-                            if(xSmaller) {
-                                updateZOrder(e);
-                            }
-
-                            if(!isParsing && getCurrentScene().getGoalCondition().check(this)) {
-                                if(sceneIndex+1 >= level.getScenes().size()) {
-                                    e.showDone().setOnFinished((aev)-> {
-                                        nextScene();
-                                    });
-                                } else {
-                                    nextScene();
-                                }
-                            }
-                        });
-                    });
-
-                    e.yProperty().addListener(l -> {
-
-                        double x = (e.getY() * view.getTileWidth() / 2)
-                                + (e.getX() * view.getTileWidth() / 2);
-                        double y = (e.getX() * view.getTileHeight() / 2)
-                                - (e.getY() * view.getTileHeight() / 2);
-
-                        // center y
-                        y += (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
-
-                        TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
-
-                        transition.setFromX(e.getView().getTranslateX());
-                        transition.setFromY(e.getView().getTranslateY());
-                        transition.setToX(x);
-                        transition.setToY(y);
-                        transition.play();
-
-                        boolean yBigger =   y > e.getView().getTranslateY();
-                        boolean ySmaller =   y < e.getView().getTranslateY();
-
-                        if(yBigger) {
-                            updateZOrder(e);
-                        }
-
-                        transition.setOnFinished((ae)-> {
-
-                            if(ySmaller) {
-                                updateZOrder(e);
-                            }
-
-                            if(!isParsing && getCurrentScene().getGoalCondition().check(this)) {
-                                if(sceneIndex+1 >= level.getScenes().size()) {
-                                    e.showDone().setOnFinished((aev)->{
-                                        nextScene();
-                                    });
-                                } else {
-                                    nextScene();
-                                }
-                            }
-                        });
-
-                    });
-                }
+                } // end for
 
                 for (Entity e : c.getRemoved()) {
+                    e.setShadow(false);
                     view.getMapPane().getChildren().remove(e.getView());
                 }
             }
@@ -147,6 +70,86 @@ public class Map {
 
         parseMaps();
 
+    }
+
+    private void updateYLocation(Entity e) {
+        double x = (e.getY() * view.getTileWidth() / 2) + (e.getX() * view.getTileWidth() / 2);
+        double y = (e.getX() * view.getTileHeight() / 2) - (e.getY() * view.getTileHeight() / 2);
+
+        // center y
+        y += (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
+
+        TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
+
+        transition.setFromX(e.getView().getTranslateX());
+        transition.setFromY(e.getView().getTranslateY());
+        transition.setToX(x);
+        transition.setToY(y);
+        transition.play();
+
+        boolean yBigger = y > e.getView().getTranslateY();
+        boolean ySmaller = y < e.getView().getTranslateY();
+
+        if (yBigger) {
+            updateZOrder(e);
+        }
+
+        transition.setOnFinished((ae) -> {
+
+            if (ySmaller) {
+                updateZOrder(e);
+            }
+
+            if (!isParsing && getCurrentScene().getGoalCondition().check(this)) {
+                if (sceneIndex + 1 >= level.getScenes().size()) {
+                    e.showDone().setOnFinished((aev) -> {
+                        nextScene();
+                    });
+                } else {
+                    nextScene();
+                }
+            }
+        });
+
+    }
+
+    private void updateXLocation(Entity e) {
+        double x = (e.getY() * view.getTileWidth() / 2) + (e.getX() * view.getTileWidth() / 2);
+        double y = (e.getX() * view.getTileHeight() / 2) - (e.getY() * view.getTileHeight() / 2);
+
+        // center y
+        y += (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
+
+        TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
+        transition.setFromX(e.getView().getTranslateX());
+        transition.setFromY(e.getView().getTranslateY());
+        transition.setToX(x);
+        transition.setToY(y);
+        transition.play();
+
+        boolean xBigger = x > e.getView().getTranslateX();
+        boolean xSmaller = x < e.getView().getTranslateX();
+
+        if (xBigger) {
+            updateZOrder(e);
+        }
+
+        transition.setOnFinished((ae) -> {
+
+            if (xSmaller) {
+                updateZOrder(e);
+            }
+
+            if (!isParsing && getCurrentScene().getGoalCondition().check(this)) {
+                if (sceneIndex + 1 >= level.getScenes().size()) {
+                    e.showDone().setOnFinished((aev) -> {
+                        nextScene();
+                    });
+                } else {
+                    nextScene();
+                }
+            }
+        });
     }
 
     private void updateZOrder(Entity entity) {
@@ -263,9 +266,8 @@ public class Map {
                             break;
                         default:
 //                            tileView =  new TileView("" + tileType);
-                            Entity tile = Entity.newTile("" + tileType);
+                            Entity tile = Entity.newTile(this, "" + tileType, i, j);
                             tileView = tile.getView();
-                            tile.setMap(this);
                             tiles.add(tile);
                             tile.setLocation(i, j);
                             break;
@@ -288,8 +290,7 @@ public class Map {
                     case ' ':
                         break;
                     default:
-                        Entity entity = new Entity(""+entityType);
-                        entity.setMap(this);
+                        Entity entity = new Entity(this, ""+entityType, i, j);
                         entities.add(entity);
                         entity.setLocation(i, j);
                         break;
@@ -300,6 +301,18 @@ public class Map {
         isParsing = false;
 
         updateZOrder(null);
+    }
+
+    /**
+     * Returns a tile specified by location.
+     * @param x x location
+     * @param y y location
+     * @return the tile specified by location
+     */
+    public Entity getTileByLocation(int x, int y) {
+        return tiles.stream().filter(
+            tile->tile.getX() == x && tile.getY() == y).
+            findAny().orElse(null);
     }
 
     /**
