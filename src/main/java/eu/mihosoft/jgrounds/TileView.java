@@ -136,6 +136,10 @@ public class TileView extends Region {
         }
     }
 
+    void setImage(String imagePath) {
+        view.setImage(new Image("/eu/mihosoft/jgrounds/"+imagePath));
+    }
+
     public void showShadow(boolean shadow) {
         if(!isEntity()) {
             shadowView.setVisible(shadow);

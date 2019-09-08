@@ -16,6 +16,8 @@ public class Entity {
 
     private int z;
 
+    private boolean fadeTransitionIgnored;
+
     public Entity(Map map, String type, int x, int y) {
         this(map, type, true, x, y);
     }
@@ -27,7 +29,10 @@ public class Entity {
         this.setLocation(x, y);
         this.view = new TileView(type, isEntity);
 
-        if(Character.isDigit(type.charAt(0)) || "t".equals(type.toLowerCase()) || (!isEntity && "G".equals(type))) {
+        if(Character.isDigit(type.charAt(0)) 
+            || "t".equals(type.toLowerCase()) 
+            || (!isEntity && "G".equals(type)) 
+            || (!isEntity && "p".equals((type.toLowerCase())))) {
             z = 0;
         } else if((isEntity && "G".equals(type))) {
             z = 2;
@@ -46,11 +51,35 @@ public class Entity {
     }
 
     public void setLocation(int x, int y) {
+
+        setFadeTransitionIgnored(false);
+
         xProperty().set(x);
         yProperty().set(y);
 
         // set shadow
 
+    }
+
+    public void setLocation(int x, int y, boolean disableTransition) {
+
+        setFadeTransitionIgnored(disableTransition);
+
+        xProperty().set(x);
+        yProperty().set(y);
+
+        setFadeTransitionIgnored(false);
+    }
+
+    private void setFadeTransitionIgnored(boolean state) {
+        this.fadeTransitionIgnored = state;
+    }
+
+    /**
+     * @return the fadeTransitionIgnored
+     */
+    boolean isFadeTransitionIgnored() {
+        return fadeTransitionIgnored;
     }
 
     void setShadow(boolean shadow) {

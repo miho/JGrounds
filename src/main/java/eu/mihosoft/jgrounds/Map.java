@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Map {
 
@@ -130,18 +131,18 @@ public class Map {
     private void updateLocation(Entity e) {
         
         double x = (e.getY() * view.getTileWidth() / 2) + (e.getX() * view.getTileWidth() / 2);
-        double y = (e.getX() * view.getTileHeight() / 2) - (e.getY() * view.getTileHeight() / 2);
+        double yTmp = (e.getX() * view.getTileHeight() / 2) - (e.getY() * view.getTileHeight() / 2);
 
         // center y
-        y += (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
-
-
+        double y = yTmp + (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
 
         TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
         transition.setFromX(e.getView().getTranslateX());
         transition.setFromY(e.getView().getTranslateY());
         transition.setToX(x);
         transition.setToY(y);
+
+        //boolean xBigger = x > e.getView().getTranslateX();
 
         if(Double.compare(x, 0) == 0 || Double.compare(e.getView().getTranslateX(), 0) == 0 ) {
             e.getView().setTranslateX(x);
@@ -153,35 +154,46 @@ public class Map {
             transition2.play();
 
         } else {
-            transition.play();
+            if(e.isFadeTransitionIgnored()) {
+                e.getView().setTranslateX(x);
+                e.getView().setTranslateY(y);
+                updateMap(e,x,y);
+            } else {
+                transition.play();
+            }
         }
 
-        boolean xBigger = x > e.getView().getTranslateX();
-        boolean xSmaller = x < e.getView().getTranslateX();
+        updateZOrder(e);
 
-        if (xBigger) {
-            updateZOrder(e);
-        }
+        // if (xBigger) {
+        //     //updateZOrder(e);
+        // }
 
         transition.setOnFinished((ae) -> {
-
-            if (xSmaller) {
-                updateZOrder(e);
-            }
-
-            if (!isParsing && getCurrentScene().getGoalCondition().check(this)) {
-                if (sceneIndex + 1 >= level.getScenes().size()) {
-                    e.showDone().setOnFinished((aev) -> {
-                        nextScene();
-                    });
-                } else {
-                    nextScene();
-                }
-            }
+            updateMap(e,x,y);
         });
     }
 
-    private void updateZOrder(Entity entity) {
+    private void updateMap(Entity e, double x, double y) {
+        updateZOrder(e);
+        // boolean xSmaller = x < e.getView().getTranslateX();
+
+        // if (xSmaller) {
+        //     updateZOrder(e);
+        // }
+
+        if (!isParsing && getCurrentScene().getGoalCondition().check(this)) {
+            if (sceneIndex + 1 >= level.getScenes().size()) {
+                e.showDone().setOnFinished((aev) -> {
+                    nextScene();
+                });
+            } else {
+                nextScene();
+            }
+        }
+    }
+
+    void updateZOrder(Entity entity) {
 
         Comparator<Entity> comparator = (o1, o2) -> {
 
@@ -298,7 +310,6 @@ public class Map {
                             Entity tile = Entity.newTile(this, "" + tileType, i, j);
                             tileView = tile.getView();
                             tiles.add(tile);
-                            tile.setLocation(i, j);
                             break;
                     }
 
@@ -321,7 +332,6 @@ public class Map {
                     default:
                         Entity entity = new Entity(this, ""+entityType, i, j);
                         entities.add(entity);
-                        entity.setLocation(i, j);
                         break;
                 }
             } // end for j
@@ -345,6 +355,17 @@ public class Map {
     }
 
     /**
+     * Returns tiles specified by type.
+     * @param type tile type
+     * @return the tiles specified by type
+     */
+    public List<Entity> getTilesByType(char type) {
+        return tiles.stream().filter(
+            tile->Objects.equals(tile.getType().charAt(0),type)).
+                  collect(Collectors.toList());
+    }
+
+    /**
      * @return the view
      */
     public MapView getView() {
@@ -364,11 +385,11 @@ public class Map {
     }
 
     public boolean hasDuke() {
-        return getEntities().stream().filter(entity -> "D".equals(entity.getType())).findFirst().isPresent();
+        return getDuke()!=null;
     }
 
     public Entity getDuke() {
-        return getEntities().stream().filter(entity -> "D".equals(entity.getType())).findFirst().get();
+        return getEntities().stream().filter(entity -> "D".equals(entity.getType())).findFirst().orElse(null);
     }
 
     public Level getLevel() {

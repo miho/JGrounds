@@ -41,7 +41,7 @@ public class MapView extends ScalableContentPane {
 
     public void addTile(Node node, int i, int j) {
         
-        double x = (j * getTileWidth() / 2) + (i * getTileWidth() / 2);
+        double x = (j * getTileWidth()  / 2) + (i * getTileWidth()  / 2);
         double y = (i * getTileHeight() / 2) - (j * getTileHeight() / 2);
 
         // center y

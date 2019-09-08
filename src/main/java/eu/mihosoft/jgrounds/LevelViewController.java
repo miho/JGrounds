@@ -8,6 +8,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 // import org.fxmisc.flowless.VirtualizedScrollPane;
 // import org.fxmisc.richtext.CodeArea;
@@ -53,6 +54,8 @@ public class LevelViewController implements Initializable{
     @FXML private AnchorPane codeViewPane;
 
     @FXML private VBox commandViewPane;
+    
+    @FXML private Pane dukeControl;
 
     @FXML private AnchorPane rootPane;
 

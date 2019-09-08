@@ -2,12 +2,16 @@ package eu.mihosoft.jgrounds;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Duke {
 
@@ -24,6 +28,7 @@ public class Duke {
     public Duke(Map map) {
         this.map = map;
         this.dukeEntity = map.getDuke();
+        reset();
     }
 
     public boolean isBlocked() {
@@ -47,12 +52,25 @@ public class Duke {
         }
     }
 
+    private void updateDirectionImg() {
+        if(directionX == 1 && directionY == 0) {
+            dukeEntity.getView().setImage("entities/D-direction-0.png");
+        } else if(directionX == 0 && directionY == 1) {
+            dukeEntity.getView().setImage("entities/D-direction-3.png");
+        } else if(directionX == -1 && directionY == 0) {
+            dukeEntity.getView().setImage("entities/D-direction-2.png");
+        } else if(directionX == 0 && directionY == -1) {
+            dukeEntity.getView().setImage("entities/D-direction-1.png");
+        }
+    }
+
     public void turnRight() {
 
         Platform.runLater(()-> {
             int tmpX = directionX;
             directionX = directionY;
             directionY = -tmpX;
+            updateDirectionImg();
         });
 
         try {
@@ -68,6 +86,7 @@ public class Duke {
             int tmpX = directionX;
             directionX = -directionY;
             directionY = tmpX;
+            updateDirectionImg();
         });
 
         try {
@@ -80,6 +99,14 @@ public class Duke {
     public void reset() {
         directionX = 1;
         directionY = 0;
+        updateDirectionImg();
+    }
+
+    private boolean nextTileIsOfType(char tileType) {
+        int nextX = dukeEntity.getX()+directionX;
+        int nextY = dukeEntity.getY()+directionY;
+
+        return tileType==map.getTileTypeAt(nextX, nextY);
     }
 
     public void move() {
@@ -89,17 +116,55 @@ public class Duke {
             throw new RuntimeException("Cannot move forward! Blocked by wall!");
         }
 
+        long waitDuration = 500;
+
+        if(nextTileIsOfType('P')) {
+            waitDuration = 2000;
+        }
+
         Platform.runLater(()-> {
             // TODO fix that
             // dukeEntity.getView().toFront();
 
             dukeEntity.setLocation(dukeEntity.getX()+directionX, dukeEntity.getY()+directionY);
-        });
 
-        System.out.println("X: " + directionX + ", Y: " + directionY);
+            System.out.println("X: " + directionX + ", Y: " + directionY);
+
+            char tileType = map.getTileTypeAt(dukeEntity.getX(), dukeEntity.getY());
+
+            // beam via portal
+            if('P' == tileType) {
+
+                Entity startPortal = map.getTileByLocation(dukeEntity.getX(), dukeEntity.getY());
+                
+                // look for other portal
+                Entity targetPortal = map.getTilesByType('P').stream().
+                    filter(t->t!=startPortal).findFirst().orElse(null);
+
+                if(targetPortal==null) {
+                    throw new RuntimeException("Level design error: no target portal found!"); 
+                }  
+                
+                Timeline portalTimeline = new Timeline(
+                    new KeyFrame(Duration.millis(0),    new KeyValue(dukeEntity.getView().opacityProperty(), 1.0)),
+                    new KeyFrame(Duration.millis(800),  new KeyValue(dukeEntity.getView().opacityProperty(), 0.0)),
+                    new KeyFrame(Duration.millis(800),  (ae) -> {    dukeEntity.setLocation(
+                                                                        targetPortal.getX(),
+                                                                        targetPortal.getY(),
+                                                                        true
+                                                                     );
+                                                                     map.updateZOrder(dukeEntity);
+                                                        }),
+                    new KeyFrame(Duration.millis(800),  new KeyValue(dukeEntity.getView().opacityProperty(), 0.0)),
+                    new KeyFrame(Duration.millis(1600), new KeyValue(dukeEntity.getView().opacityProperty(), 1.0))
+                );
+
+                portalTimeline.play();
+            }// end if enabled portal
+        }); // end runLater
 
         try {
-            Thread.sleep(500);
+            Thread.sleep(waitDuration);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

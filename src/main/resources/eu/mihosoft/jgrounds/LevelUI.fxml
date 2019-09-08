@@ -4,6 +4,8 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane fx:id="rootPane" prefHeight="516.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.mihosoft.jgrounds.LevelViewController">
@@ -15,8 +17,10 @@
                   <AnchorPane fx:id="worldViewPane" prefHeight="514.0" prefWidth="365.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <HBox fx:id="runtimeControlPane" alignment="CENTER" layoutX="83.0" layoutY="414.0" prefHeight="50.0" prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
+                        <Pane minHeight="100.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                         <Button alignment="CENTER" mnemonicParsing="false" onAction="#onStopAction" prefWidth="80.0" text="STOP" textAlignment="CENTER" />
                         <Button alignment="CENTER" mnemonicParsing="false" onAction="#onCompileAction" prefWidth="80.0" text="RUN" textAlignment="CENTER" />
+                        <StackPane fx:id="dukeControl" minHeight="150.0" prefHeight="150.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
