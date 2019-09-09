@@ -44,8 +44,8 @@ public abstract class Condition {
 
                 boolean isDuke = false;
 
-                if(m.hasDuke()) {
-                    Entity duke = m.getDuke();
+                if(m.hasDukeEntity()) {
+                    Entity duke = m.getDukeEntity();
                     isDuke = (duke.getX() == entityX && duke.getY() == entityY);
                 }
 

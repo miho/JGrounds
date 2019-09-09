@@ -183,4 +183,8 @@ public class TileView extends Region {
         return fadeTransition;
 
     }
+
+	public void hideError() {
+        errorView.setOpacity(0.0);
+	}
 }

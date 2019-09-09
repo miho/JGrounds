@@ -384,11 +384,11 @@ public class Map {
         return entityMap;
     }
 
-    public boolean hasDuke() {
-        return getDuke()!=null;
+    public boolean hasDukeEntity() {
+        return getDukeEntity()!=null;
     }
 
-    public Entity getDuke() {
+    public Entity getDukeEntity() {
         return getEntities().stream().filter(entity -> "D".equals(entity.getType())).findFirst().orElse(null);
     }
 

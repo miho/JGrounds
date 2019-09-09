@@ -142,4 +142,8 @@ public class Entity {
     void setEntity(boolean entity) {
         this.entity = entity;
     }
+
+	public void hideError() {
+        view.hideError();
+	}
 }

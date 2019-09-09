@@ -18,8 +18,11 @@ public class Duke {
     private final Map map;
     private final Entity dukeEntity;
 
-    private int directionX = 1;
-    private int directionY = 0;
+    private static int defaultDirectionX = 1;
+    private static int defaultDirectionY = 0;
+
+    private int directionX = defaultDirectionX;
+    private int directionY = defaultDirectionY;
 
     private final List<Entity> collectedGems = new ArrayList<>();
 
@@ -27,8 +30,12 @@ public class Duke {
 
     public Duke(Map map) {
         this.map = map;
-        this.dukeEntity = map.getDuke();
+        this.dukeEntity = map.getDukeEntity();
         reset();
+    }
+
+    public boolean isInDefaultOrientation() {
+        return directionX == defaultDirectionX && directionY == defaultDirectionY;
     }
 
     public boolean isBlocked() {
@@ -107,6 +114,20 @@ public class Duke {
         int nextY = dukeEntity.getY()+directionY;
 
         return tileType==map.getTileTypeAt(nextX, nextY);
+    }
+
+    /**
+     * @return the directionX
+     */
+    public int getDirectionX() {
+        return directionX;
+    }
+
+    /**
+     * @return the directionY
+     */
+    public int getDirectionY() {
+        return directionY;
     }
 
     public void move() {
