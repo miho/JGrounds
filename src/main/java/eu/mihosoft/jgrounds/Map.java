@@ -136,17 +136,21 @@ public class Map {
         // center y
         double y = yTmp + (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
 
+        boolean xBigger =   x > e.getView().getTranslateX();
+        boolean yBigger =   y > e.getView().getTranslateY();
+
         TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
         transition.setFromX(e.getView().getTranslateX());
         transition.setFromY(e.getView().getTranslateY());
         transition.setToX(x);
         transition.setToY(y);
 
-        //boolean xBigger = x > e.getView().getTranslateX();
-
         if(Double.compare(x, 0) == 0 || Double.compare(e.getView().getTranslateX(), 0) == 0 ) {
+
             e.getView().setTranslateX(x);
             e.getView().setTranslateY(y);
+
+            updateZOrder(e);
 
             FadeTransition transition2 = new FadeTransition(Duration.millis(1500), e.getView());
             transition2.setFromValue(0.0);
@@ -155,32 +159,35 @@ public class Map {
 
         } else {
             if(e.isFadeTransitionIgnored()) {
+
                 e.getView().setTranslateX(x);
                 e.getView().setTranslateY(y);
+
                 updateMap(e,x,y);
+
             } else {
                 transition.play();
             }
         }
 
-        updateZOrder(e);
-
-        // if (xBigger) {
-        //     //updateZOrder(e);
-        // }
+        if(xBigger || yBigger) {
+            //updateZOrder(e);
+        }
 
         transition.setOnFinished((ae) -> {
             updateMap(e,x,y);
         });
     }
 
-    private void updateMap(Entity e, double x, double y) {
-        updateZOrder(e);
-        // boolean xSmaller = x < e.getView().getTranslateX();
 
-        // if (xSmaller) {
-        //     updateZOrder(e);
-        // }
+    private void updateMap(Entity e, double x, double y) {
+
+        boolean xSmaller =  x < e.getView().getTranslateX();
+        boolean ySmaller =  y < e.getView().getTranslateY();
+
+        if (xSmaller || ySmaller) {
+            //updateZOrder(e);
+        }
 
         if (!isParsing && getCurrentScene().getGoalCondition().check(this)) {
             if (sceneIndex + 1 >= level.getScenes().size()) {
@@ -222,6 +229,7 @@ public class Map {
     }
 
     public void nextScene() {
+
         sceneIndex++;
 
         if(sceneIndex >= level.getScenes().size()) {
@@ -230,11 +238,6 @@ public class Map {
         }
 
         parseMaps();
-
-//        List<Entity> revertedEntities = new ArrayList<>(entities);
-//        Collections.reverse(revertedEntities);
-//        revertedEntities.forEach(entity -> entity.getView().toFront());
-
 
     }
 
@@ -397,5 +400,45 @@ public class Map {
     }
 }
 
+
+
+
+/*
+
+# portal level 3
+
+// take 1
+
+duke.turnLeft()
+duke.move()
+duke.move()
+duke.turnRight()
+duke.turnRight()
+duke.move()
+duke.move()
+duke.turnLeft()
+
+
+// take 2
+
+duke.turnLeft()
+duke.move()
+duke.turnRight()
+duke.turnRight()
+duke.move()
+duke.move()
+duke.move()
+duke.turnLeft()
+duke.move()
+duke.turnLeft()
+duke.move()
+duke.turnLeft()
+duke.move()
+duke.turnRight()
+duke.move()
+duke.turnRight()
+duke.turnRight()
+
+*/
 
 
