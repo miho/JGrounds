@@ -111,6 +111,7 @@ duke.move()
 duke.move()
 duke.turnRight()
 duke.move()
+duke.move()
 
 
 
