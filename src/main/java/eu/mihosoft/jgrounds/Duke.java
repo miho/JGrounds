@@ -149,8 +149,6 @@ public class Duke {
 
             dukeEntity.setLocation(dukeEntity.getX()+directionX, dukeEntity.getY()+directionY);
 
-            System.out.println("X: " + directionX + ", Y: " + directionY);
-
             char tileType = map.getTileTypeAt(dukeEntity.getX(), dukeEntity.getY());
 
             // beam via portal
@@ -191,6 +189,14 @@ public class Duke {
         }
     }
 
+    public void noOp() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void collect() {
 
         Platform.runLater(()-> {
@@ -206,6 +212,10 @@ public class Duke {
             collectedEntities.stream().forEach(entity -> {
 
                 entity.setShadow(false);
+
+                entity.setIgnoreForCompare(true);
+
+                map.checkCondition(dukeEntity);
 
                 TranslateTransition translateTransition =
                         new TranslateTransition(Duration.millis(500), entity.getView());
@@ -231,7 +241,7 @@ public class Duke {
         });
 
         try {
-            Thread.sleep(Duke.delay);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -21,6 +21,7 @@ public class Entity {
     private int z;
 
     private boolean fadeTransitionIgnored;
+    private boolean ignoreCompare;
 
     public Entity(Map map, String type, int x, int y) {
         this(map, type, true, x, y);
@@ -150,4 +151,15 @@ public class Entity {
 	public void hideError() {
         view.hideError();
 	}
+
+	public void setIgnoreForCompare(boolean b) {
+        this.ignoreCompare = b;
+    }
+    
+    /**
+     * @return the ignoreCompare
+     */
+    public boolean isIgnoredForCompare() {
+        return ignoreCompare;
+    }
 }

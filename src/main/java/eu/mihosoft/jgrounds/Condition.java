@@ -1,5 +1,6 @@
 package eu.mihosoft.jgrounds;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public abstract class Condition {
@@ -49,12 +50,16 @@ public abstract class Condition {
                     isDuke = (duke.getX() == entityX && duke.getY() == entityY);
                 }
 
-                if(goal == ' ' || isDuke) {
+                Optional<Entity> entity = m.getEntities().stream().
+                        filter(e -> e.getX() == entityX && e.getY() == entityY).findFirst();
+
+                if(goal == ' ') {
                     continue;
                 }
 
-                Optional<Entity> entity = m.getEntities().stream().
-                        filter(e -> e.getX() == entityX && e.getY() == entityY).findFirst();
+                if (isDuke && noEntityAtDukeLocation(m)) {
+                    continue;
+                }        
 
                 if(goal=='0'&& entity.isPresent()) {
                     return false;
@@ -70,6 +75,30 @@ public abstract class Condition {
             }
 
             return true;
+        }
+
+        private boolean entityAtIs(Map m, int entityX, int entityY, char type) {
+
+            Optional<Entity> entityAt = m.getEntities().stream().
+            filter(e->e!=m.getDukeEntity()).
+              filter(e->e.getX()==entityX &&e.getY()==entityY).findAny();
+            
+            if(!entityAt.isPresent()) {
+                return false;
+            }
+    
+            return Objects.equals(""+type,entityAt.get().getType());
+        }
+    
+        private boolean noEntityAtDukeLocation(Map m) {
+    
+            if(!m.hasDukeEntity()) {
+                return false;
+            }
+    
+            Entity duke = m.getDukeEntity();
+    
+            return m.getEntities().stream().filter(e->!e.isIgnoredForCompare()).filter(e->e!=duke).count() == 0;
         }
     }
 

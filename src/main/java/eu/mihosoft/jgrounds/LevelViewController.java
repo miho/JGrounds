@@ -127,6 +127,7 @@ public class LevelViewController implements Initializable {
             commandPane.getColumnConstraints().add(col);
         }
 
+        commandViewPane.getChildren().clear();
         commandViewPane.getChildren().add(commandPane);
 
         Button forwardBtn = new Button();

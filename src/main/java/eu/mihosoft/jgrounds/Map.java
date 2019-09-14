@@ -73,61 +73,6 @@ public class Map {
 
     }
 
-    // private void updateYLocation(Entity e) {
-    //     double x = (e.getY() * view.getTileWidth() / 2) + (e.getX() * view.getTileWidth() / 2);
-    //     double y = (e.getX() * view.getTileHeight() / 2) - (e.getY() * view.getTileHeight() / 2);
-
-    //     // center y
-    //     y += (getHeight() * view.getTileHeight()) / 2.0 + view.getTileHeight();
-
-    //     TranslateTransition transition = new TranslateTransition(Duration.millis(400), e.getView());
-
-    //     transition.setFromX(e.getView().getTranslateX());
-    //     transition.setFromY(e.getView().getTranslateY());
-    //     transition.setToX(x);
-    //     transition.setToY(y);
-        
-    //     if(Double.compare(y, 0) == 0 || Double.compare(e.getView().getTranslateY(), 0) == 0 ) {
-    //         e.getView().setTranslateX(x);
-    //         e.getView().setTranslateY(y);
-
-    //         FadeTransition transition2 = new FadeTransition(Duration.millis(800), e.getView());
-    //         transition2.setFromValue(0.0);
-    //         transition2.setToValue(1.0);
-    //         //transition2.setCycleCount(3);
-    //         //transition2.setAutoReverse(true);
-    //         transition2.play();
-
-    //     } else {
-    //         transition.play();
-    //     }
-
-    //     boolean yBigger = y > e.getView().getTranslateY();
-    //     boolean ySmaller = y < e.getView().getTranslateY();
-
-    //     if (yBigger) {
-    //         updateZOrder(e);
-    //     }
-
-    //     transition.setOnFinished((ae) -> {
-
-    //         if (ySmaller) {
-    //             updateZOrder(e);
-    //         }
-
-    //         if (!isParsing && getCurrentScene().getGoalCondition().check(this)) {
-    //             if (sceneIndex + 1 >= level.getScenes().size()) {
-    //                 e.showDone().setOnFinished((aev) -> {
-    //                     nextScene();
-    //                 });
-    //             } else {
-    //                 nextScene();
-    //             }
-    //         }
-    //     });
-
-    // }
-
     private void updateLocation(Entity e) {
         
         double x = (e.getY() * view.getTileWidth() / 2) + (e.getX() * view.getTileWidth() / 2);
@@ -189,6 +134,10 @@ public class Map {
             updateZOrder(e);
         }
 
+        checkCondition(e);
+    }
+
+    void checkCondition(Entity e) {
         if (!isParsing && getCurrentScene().getGoalCondition().check(this)) {
             if (sceneIndex + 1 >= level.getScenes().size()) {
                 e.showDone().setOnFinished((aev) -> {

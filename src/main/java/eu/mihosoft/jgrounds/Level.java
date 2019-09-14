@@ -266,14 +266,22 @@ public final class Level {
                 "+V-V-V+" +
                 "v000p0v" +
                 "|00000|" +
-                "v-----v" +
-                "|00p00|" +
+                "v00000v" +
+                "+V-V-V+" +
+                "       " +
+                "+V-V-V+" +
+                "v00p00v" +
+                "|00000|" +
                 "v00G00v" +
                 "+V-V-V+";
 
         String entityMap1 =
                 "0000000" +
                 "0D0G000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "       " +
                 "0000000" +
                 "0000000" +
                 "0000000" +
@@ -286,6 +294,10 @@ public final class Level {
                 "0000000" +
                 "0000000" +
                 "0000000" +
+                "       " +
+                "0000000" +
+                "0000000" +
+                "0000000" +
                 "0000000" +
                 "0000000";
 
@@ -293,14 +305,22 @@ public final class Level {
                 "+V-V-V+" +
                 "v000P0v" +
                 "|00000|" +
-                "v-----v" +
-                "|00P00|" +
+                "v00000v" +
+                "+V-V-V+" +
+                "       " +
+                "+V-V-V+" +
+                "v00P00v" +
+                "|00000|" +
                 "v00G00v" +
                 "+V-V-V+";
 
         String entityMap2 =
                 "0000000" +
                 "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "       " +
                 "0000000" +
                 "0000000" +
                 "0000000" +
@@ -313,10 +333,14 @@ public final class Level {
                 "0000000" +
                 "0000000" +
                 "0000000" +
+                "0000000" +
+                "       " +
+                "0000000" +
+                "0000000" +
                 "000D000" +
                 "0000000";
 
-        return new Level(7,7,
+        return new Level(7,11,
                 new Scene(floorMap1, entityMap1,
                 new Condition.EntityMapCondition(goalState1, "Duke has to reach his goal.")), 
                 new Scene(floorMap2, entityMap2,
