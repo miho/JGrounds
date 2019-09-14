@@ -1,0 +1,23 @@
+.forward-button {
+    -fx-background-image: url('/eu/mihosoft/jgrounds/ui/btn-move-black.png');
+    -fx-background-size: stretch;
+    -fx-background-repeat: no-repeat;
+}
+
+.left-button {
+    -fx-background-image: url('/eu/mihosoft/jgrounds/ui/btn-left-black.png');
+    -fx-background-size: stretch;
+    -fx-background-repeat: no-repeat;
+}
+
+.right-button {
+    -fx-background-image: url('/eu/mihosoft/jgrounds/ui/btn-right-black.png');
+    -fx-background-size: stretch;
+    -fx-background-repeat: no-repeat;
+}
+
+.collect-button {
+    -fx-background-image: url('/eu/mihosoft/jgrounds/ui/btn-collect-black.png');
+    -fx-background-size: stretch;
+    -fx-background-repeat: no-repeat;
+}

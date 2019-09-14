@@ -25,6 +25,9 @@ public class JGrounds extends Application {
         double h = scene==null?600:scene.getHeight();
 
         this.scene = new Scene(levelView, w, h);
+        scene.getStylesheets().add(getClass().getResource(
+            "/eu/mihosoft/jgrounds/ui/style.css").toExternalForm()
+        );
         primaryStage.setScene(scene);
 
         levelView.initLevel();
@@ -46,6 +49,7 @@ public class JGrounds extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+
             this.primaryStage = primaryStage;
 
             primaryStage.setTitle("JGrounds App running on JDK " + System.getProperty("java.version"));
@@ -53,8 +57,9 @@ public class JGrounds extends Application {
 
             Level[] levels = {
                 //Level.frontVSBackDebugLevel(),
-//                Level.newDefaultLevel(),
-//                Level.levelTwo(),
+                Level.portalLevel(),
+                Level.newDefaultLevel(),
+               Level.levelTwo(),
                 Level.levelThree(),
                 Level.levelFour(),
                 Level.levelFive()

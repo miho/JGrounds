@@ -171,7 +171,7 @@ public class Map {
         }
 
         if(xBigger || yBigger) {
-            //updateZOrder(e);
+            updateZOrder(e);
         }
 
         transition.setOnFinished((ae) -> {
@@ -186,7 +186,7 @@ public class Map {
         boolean ySmaller =  y < e.getView().getTranslateY();
 
         if (xSmaller || ySmaller) {
-            //updateZOrder(e);
+            updateZOrder(e);
         }
 
         if (!isParsing && getCurrentScene().getGoalCondition().check(this)) {

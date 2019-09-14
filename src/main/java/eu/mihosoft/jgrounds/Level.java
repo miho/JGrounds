@@ -125,7 +125,7 @@ public final class Level {
                 "v0000Gv" +
                 "|00000|" +
                 "v00000v" +
-                "|P00P0|" +
+                "|00000|" +
                 "v00000v" +
                 "+V-V-V+";
 
@@ -261,55 +261,66 @@ public final class Level {
                 new Condition.EntityMapCondition(goalState, "Duke has to reach his goal.")));
     }
 
-    public static Level frontVSBackDebugLevel() {
+    public static Level portalLevel() {
         String floorMap1 =
-                "+V-V+" +
-                "v000v" +
-                "|0f0|" +
-                "v00Gv" +
-                "+V-V+";
+                "+V-V-V+" +
+                "v000p0v" +
+                "|00000|" +
+                "v-----v" +
+                "|00p00|" +
+                "v00G00v" +
+                "+V-V-V+";
 
         String entityMap1 =
-                "00000" +
-                "00D00" +
-                "00000" +
-                "00000" +
-                "00000";
+                "0000000" +
+                "0D0G000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000";
 
         String goalState1 =
-                "00000" +
-                "00000" +
-                "000D0" +
-                "00000" +
-                "00000";
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000";
 
         String floorMap2 =
-                "+V-V+" +
-                "v000v" +
-                "|0t0|" +
-                "v00Gv" +
-                "+V-V+";
+                "+V-V-V+" +
+                "v000P0v" +
+                "|00000|" +
+                "v-----v" +
+                "|00P00|" +
+                "v00G00v" +
+                "+V-V-V+";
 
         String entityMap2 =
-                "00000" +
-                "00000" +
-                "00000" +
-                "00000" +
-                "00000";
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000";
 
         String goalState2 =
-                "00000" +
-                "00000" +
-                "00000" +
-                "000D0" +
-                "00000";
-               
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "0000000" +
+                "000D000" +
+                "0000000";
 
-        return new Level(5,5,
+        return new Level(7,7,
                 new Scene(floorMap1, entityMap1,
-                new Condition.EntityMapCondition(goalState1, "Duke has to reach his goal.")),
+                new Condition.EntityMapCondition(goalState1, "Duke has to reach his goal.")), 
                 new Scene(floorMap2, entityMap2,
-                new Condition.EntityMapCondition(goalState2, "Duke has to reach his goal."))
+                new Condition.EntityMapCondition(goalState2, "Duke has to reach his goal.")) 
         );
     }
 }

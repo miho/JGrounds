@@ -3,13 +3,22 @@ package eu.mihosoft.jgrounds;
 import groovy.lang.GroovyShell;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 // import org.fxmisc.flowless.VirtualizedScrollPane;
 // import org.fxmisc.richtext.CodeArea;
@@ -17,6 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.awt.GridLayout;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.FutureTask;
@@ -43,7 +53,7 @@ public class LevelViewController implements Initializable {
         codeArea.setStyle("-fx-font-family: courier-new; -fx-font-size: 16pt;");
         // codeArea.setFont(Font.font("Courier New", FontWeight.BOLD, 16));
         // codeArea.setText("duke.move()");
-        codeArea.replaceText(0, 0, "duke.move()");
+        codeArea.replaceText(0, 0, "// your code");
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         VirtualizedScrollPane<CodeArea> vsPane = new VirtualizedScrollPane<>(codeArea);
 
@@ -97,6 +107,67 @@ public class LevelViewController implements Initializable {
 
         worldViewPane.layout();
 
+        GridPane commandPane = new GridPane();
+
+        double proportionCol = 100/3;
+        double proportionRow = 100/2;
+
+        for(int i = 0 ; i <3; i++) {
+            
+            RowConstraints row = new RowConstraints();
+            ColumnConstraints col = new ColumnConstraints();
+            col.setPercentWidth(proportionCol);
+            
+            if( i<2 ){
+                row.setPercentHeight(proportionRow);
+            } else {
+                row.setPercentHeight(0);
+            }
+            commandPane.getRowConstraints().add(row);
+            commandPane.getColumnConstraints().add(col);
+        }
+
+        commandViewPane.getChildren().add(commandPane);
+
+        Button forwardBtn = new Button();
+        forwardBtn.getStyleClass().add("forward-button");
+        forwardBtn.setMinWidth(65);
+        forwardBtn.setMinHeight(65);
+        Button leftBtn = new Button();
+        leftBtn.getStyleClass().add("left-button");
+        leftBtn.setMinWidth(65);
+        leftBtn.setMinHeight(65);
+        Button rightBtn = new Button();
+        rightBtn.getStyleClass().add("right-button");
+        rightBtn.setMinWidth(65);
+        rightBtn.setMinHeight(65);
+        Button collectBtn = new Button();
+        collectBtn.getStyleClass().add("collect-button");
+        collectBtn.setMinWidth(65);
+        collectBtn.setMinHeight(65);
+
+        forwardBtn.setOnAction((ae)->{
+            int pos = codeArea.getCaretPosition();
+            codeArea.replaceText(codeArea.getText()+ "\nduke.move()");
+        });
+        leftBtn.setOnAction((ae)->{
+            int pos = codeArea.getCaretPosition();
+            codeArea.replaceText(codeArea.getText()+ "\nduke.turnLeft()");
+        });
+        rightBtn.setOnAction((ae)->{
+            int pos = codeArea.getCaretPosition();
+            codeArea.replaceText(codeArea.getText()+ "\nduke.turnRight()");
+        });
+        collectBtn.setOnAction((ae)->{
+            int pos = codeArea.getCaretPosition();
+            codeArea.replaceText(codeArea.getText()+ "\nduke.collect()");
+        });
+
+        commandPane.add(forwardBtn, 1, 0);
+        commandPane.add(leftBtn, 0, 1);
+        commandPane.add(rightBtn, 2, 1);
+        commandPane.add(collectBtn, 1, 1);
+
     }
 
     public AnchorPane getRootPane() {
@@ -113,9 +184,6 @@ public class LevelViewController implements Initializable {
         thread = new Thread(() -> {
 
             try {
-
-                
-
                 shell.evaluate(codeArea.getText());
             } catch(Throwable ex) {
                 Logger.getLogger(LevelViewController.class.getName()).log(
@@ -152,3 +220,30 @@ public class LevelViewController implements Initializable {
         onStopAction(null);
     }
 }
+
+
+// class ImageButton extends Parent {
+
+//     private Image btnImage;
+//     private Image btnPressedImg;
+
+//     private final ImageView imageview;
+
+//     public ImageButton(String img, String pressedImg) {
+//         this.btnImage = new Image(getClass().getResource(img).toExternalForm());
+//         this.btnPressedImg = new Image(getClass().getResource(img).toExternalForm());
+//         this.imageview = new ImageView(btnImage);
+//         this.getChildren().add(this.imageview);
+
+//         this.imageview.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+//             public void handle(MouseEvent evt) {
+//                 imageview.setImage(btnPressedImg);
+//             }
+//         });
+
+//         // TODO other event handlers like mouse up
+
+//     } 
+
+// }

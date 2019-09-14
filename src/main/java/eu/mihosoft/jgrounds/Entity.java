@@ -4,6 +4,10 @@ import javafx.animation.FadeTransition;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+/**
+ * An entity is a dynamic game object. Static game objects are also represented
+ * by this class. In this case the entity property is set to true.
+ */
 public class Entity {
 
     private final String type;
