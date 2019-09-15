@@ -149,19 +149,51 @@ public class LevelViewController implements Initializable {
 
         forwardBtn.setOnAction((ae)->{
             int pos = codeArea.getCaretPosition();
-            codeArea.replaceText(codeArea.getText()+ "\nduke.move()");
+
+            String newLine;
+            if(pos>0 && !codeArea.getText(pos-1, pos-1).equals("\n")) {
+                newLine="\n";
+            } else {
+                newLine="";
+            }
+
+            codeArea.replaceText(0,pos,codeArea.getText(0, pos)+ newLine+"duke.move()");
         });
         leftBtn.setOnAction((ae)->{
             int pos = codeArea.getCaretPosition();
-            codeArea.replaceText(codeArea.getText()+ "\nduke.turnLeft()");
+
+            String newLine;
+            if(pos>0 && !codeArea.getText(pos-1, pos-1).equals("\n")) {
+                newLine="\n";
+            } else {
+                newLine="";
+            }
+
+            codeArea.replaceText(0,pos,codeArea.getText(0, pos)+ newLine+"duke.turnLeft()");
         });
         rightBtn.setOnAction((ae)->{
             int pos = codeArea.getCaretPosition();
-            codeArea.replaceText(codeArea.getText()+ "\nduke.turnRight()");
+
+            String newLine;
+            if(pos>0 && !codeArea.getText(pos-1, pos-1).equals("\n")) {
+                newLine="\n";
+            } else {
+                newLine="";
+            }
+
+            codeArea.replaceText(0,pos,codeArea.getText(0, pos)+ newLine+"duke.turnRight()");
         });
         collectBtn.setOnAction((ae)->{
             int pos = codeArea.getCaretPosition();
-            codeArea.replaceText(codeArea.getText()+ "\nduke.collect()");
+
+            String newLine;
+            if(pos>0 && !codeArea.getText(pos-1, pos-1).equals("\n")) {
+                newLine="\n";
+            } else {
+                newLine="";
+            }
+
+            codeArea.replaceText(0,pos,codeArea.getText(0, pos)+ newLine+"duke.collect()");
         });
 
         commandPane.add(forwardBtn, 1, 0);
