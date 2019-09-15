@@ -148,52 +148,16 @@ public class LevelViewController implements Initializable {
         collectBtn.setMinHeight(65);
 
         forwardBtn.setOnAction((ae)->{
-            int pos = codeArea.getCaretPosition();
-
-            String newLine;
-            if(pos>0 && !codeArea.getText(pos-1, pos-1).equals("\n")) {
-                newLine="\n";
-            } else {
-                newLine="";
-            }
-
-            codeArea.replaceText(0,pos,codeArea.getText(0, pos)+ newLine+"duke.move()");
+            insertCode("duke.move()");
         });
         leftBtn.setOnAction((ae)->{
-            int pos = codeArea.getCaretPosition();
-
-            String newLine;
-            if(pos>0 && !codeArea.getText(pos-1, pos-1).equals("\n")) {
-                newLine="\n";
-            } else {
-                newLine="";
-            }
-
-            codeArea.replaceText(0,pos,codeArea.getText(0, pos)+ newLine+"duke.turnLeft()");
+            insertCode("duke.turnLeft()");
         });
         rightBtn.setOnAction((ae)->{
-            int pos = codeArea.getCaretPosition();
-
-            String newLine;
-            if(pos>0 && !codeArea.getText(pos-1, pos-1).equals("\n")) {
-                newLine="\n";
-            } else {
-                newLine="";
-            }
-
-            codeArea.replaceText(0,pos,codeArea.getText(0, pos)+ newLine+"duke.turnRight()");
+            insertCode("duke.turnRight()");
         });
         collectBtn.setOnAction((ae)->{
-            int pos = codeArea.getCaretPosition();
-
-            String newLine;
-            if(pos>0 && !codeArea.getText(pos-1, pos-1).equals("\n")) {
-                newLine="\n";
-            } else {
-                newLine="";
-            }
-
-            codeArea.replaceText(0,pos,codeArea.getText(0, pos)+ newLine+"duke.collect()");
+            insertCode("duke.collect()");
         });
 
         commandPane.add(forwardBtn, 1, 0);
@@ -201,6 +165,19 @@ public class LevelViewController implements Initializable {
         commandPane.add(rightBtn, 2, 1);
         commandPane.add(collectBtn, 1, 1);
 
+    }
+
+    private void insertCode(String code) {
+        int pos = codeArea.getCaretPosition();
+
+        String newLine;
+        if (pos > 0 && !codeArea.getText(pos - 1, pos - 1).equals("\n")) {
+            newLine = "\n";
+        } else {
+            newLine = "";
+        }
+
+        codeArea.replaceText(0, pos, codeArea.getText(0, pos) + newLine + code);
     }
 
     public AnchorPane getRootPane() {
