@@ -1,4 +1,4 @@
-# JGrounds APP#
+# JGrounds App
 
 ## How to run the JGrounds App
 
