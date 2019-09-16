@@ -1,12 +1,33 @@
-apply plugin: 'java'
-apply plugin: 'application'
+plugins {
+    id 'java'
+    id 'application'
+    id "com.github.hierynomus.license" version "0.15.0"
+}
 
 sourceCompatibility = '11'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
 wrapper {
     gradleVersion = '5.6'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+license {
+    header = rootProject.file('config/HEADER')
+    strictCheck = true
+    ignoreFailures = true
+    mapping {
+        java   = 'SLASHSTAR_STYLE'
+        groovy = 'SLASHSTAR_STYLE'
+        fxml   = 'XML_STYLE'
+    }
+    ext.year   = '2019'
+    ext.author = 'Michael Hoffer <info@michaelhoffer.de>'
+    exclude '**/*.svg'
 }
 
 // /**
