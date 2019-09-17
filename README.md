@@ -1,4 +1,4 @@
-# JGrounds App
+# The JGrounds App
 
 <img src="resources/img/jgrounds.png">
 
