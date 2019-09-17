@@ -84,9 +84,9 @@ public class JGrounds extends Application {
 
             Level[] levels = {
                 //Level.frontVSBackDebugLevel(),
-                Level.portalLevel(),
                 Level.newDefaultLevel(),
                 Level.levelTwo(),
+                Level.portalLevel(),
                 Level.levelThree(),
                 Level.levelFour(),
                 Level.levelFive()

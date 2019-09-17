@@ -1,5 +1,7 @@
 # JGrounds App
 
+<img src="resources/img/jgrounds.png">
+
 ## How to run the JGrounds App
 
 ### Requirements
