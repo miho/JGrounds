@@ -12,7 +12,7 @@ tasks.withType(Javadoc) {
 }
 
 wrapper {
-    gradleVersion = '5.6'
+    gradleVersion = '6.3'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
@@ -65,7 +65,7 @@ dependencies {
     
     compile 'eu.mihosoft.jfx.scaledfx:scaledfx:0.6'
 
-    compile group: 'org.codehaus.groovy', name: 'groovy', version: '2.5.4'
+    compile group: 'org.codehaus.groovy', name: 'groovy', version: '3.0.3'
     // compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4'
     // compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4', classifier: 'javadoc'
     // compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.4', classifier: 'sources'
